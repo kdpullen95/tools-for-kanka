@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Kanka Weatherizer</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../styles/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script type="module" src="index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id="vue-activator">
+        <div class="pure-form">
+            <input v-model="campaignID" placeholder="#######">
+            <input v-model="apiToken" placeholder="*******" type="password">
+            <button class="pure-button pure-button-primary" @click="getCal()">Fetch Calendars</button>
+        </div>
+        <table class="pure-table">
+            <thead><tr><th>ID</th><th>Name</th><th></th></tr></thead>
+            <tbody>
+                <tr v-for="calendar in cal">
+                    <td>{{calendar.id}}</td>
+                    <td>{{calendar.name}}</td>
+                    <td @click="openCal(calendar)" class="pure-button material-icons">open_in_full</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    
+  </body>
+</html>
