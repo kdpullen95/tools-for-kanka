@@ -1,47 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Weatherizer (Kanka)</title>
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+        integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="../styles/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script type="module" src="index.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="vue-activator">
-        <div class="pure-form">
-            <input v-model="campaignID" placeholder="#######">
-            <input v-model="apiToken" placeholder="*******" type="password">
-            <button class="pure-button pure-button-primary" @click="getCal()">Fetch Calendars</button>
-        </div>
-        <table class="pure-table" v-if="activeCal == null">
-            <thead><tr><th>ID</th><th>Name</th><th></th></tr></thead>
-            <tbody>
-                <tr v-for="calendar in cal">
-                    <td>{{calendar.id}}</td>
-                    <td>{{calendar.name}}</td>
-                    <td @click="activeCal = calendar" class="pure-button material-icons">open_in_full</td>
-                </tr>
-            </tbody>
-        </table>
-        <div v-if="activeCal != null"> 
-            <h2>{{activeCal.name}}</h2>
-            <h3>Months</h3>
-            <table class="pure-table">
-                <thead><tr><th>Name</th><th>Length</th></tr></thead>
-                <tbody><tr v-for="month of activeCal.months"><td>{{month.name}}</td><td>{{month.length}}</td></tr></tbody>
+        <!--Grid unit #1-->
+        <div class="sidebar light-border">
+            <div class="pure-form pure-form-aligned">
+                <div class="pure-control-group">
+                    <label for="aligned-campaignID">Campaign ID</label>
+                    <input id="aligned-campaignID" v-model="campaignID" placeholder="#######">
+                </div>
+                <div class="pure-control-group">
+                    <label for="aligned-token">API Token</label>
+                    <input id="aligned-token" v-model="apiToken" placeholder="*******" type="password">
+                </div>
+                <div class="pure-controls">
+                    <button class="pure-button pure-button-primary" @click="getCal()">Fetch Calendars</button>
+                </div>
+            </div>
+            <table class="pure-table" v-if="activeCal == null">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="calendar in cal">
+                        <td>{{calendar.id}}</td>
+                        <td>{{calendar.name}}</td>
+                        <td @click="activeCal = calendar" class="pure-button material-icons">open_in_full</td>
+                    </tr>
+                </tbody>
             </table>
-            <h3>Seasons</h3>
-            <div v-for="season of activeCal.seasons">
-                {{ stringify(season) }}
+            <div v-if="activeCal != null">
+                <h2>{{activeCal.name}}</h2>
+                <h3>Months</h3>
+                <table class="pure-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Length</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="month of activeCal.months">
+                            <td>{{month.name}}</td>
+                            <td>{{month.length}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Seasons</h3>
+                <div v-for="season of activeCal.seasons">
+                    {{ stringify(season) }}
+                </div>
+            </div>
+        </div>
+        <!--Grid unit #2-->
+        <div class="content light-border">
+            <h3>Days</h3>
+            <div>
+                <h4>Options</h4>
+                <div class="pure-form">
+                    <input v-model="numToGenerate" type="number">
+                    <input v-model="startingAtOffset">
+                    <button class="pure-button pure-button-primary" @click="generateWeather()">Generate
+                        Weather</button>
+                </div>
+            </div>
+            <div v-if="days.length > 0" class="days-table">
+                <h4>Output</h4>
+                <table class="pure-table">
+                    <thead>
+                        <tr>
+                            <th>Save</th>
+                            <th>Date</th>
+                            <th>Season</th>
+                            <th>Temperature</th>
+                            <th>Weather Desc</th>
+                            <th>Kanka Weather Desc</th>
+                            <th>Cloud Cover</th>
+                            <th>Humidity</th>
+                            <th>Precipitation</th>
+                            <th>Wind Speed</th>
+                            <th>Wind Direection</th>
+                            <th>Effects</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="day in days">
+                            <td>///</td>
+                            <td>{{day.date}}</td>
+                            <td>{{day.season}}</td>
+                            <td>{{day.highTemp}} / {{day.lowTemp}}</td>
+                            <td>{{day.generateWeatherName()}}</td>
+                            <td>{{day.generateWeatherNameKanka()}}</td>
+                            <td>{{day.cloudCover}}</td>
+                            <td>{{day.humidity}}</td>
+                            <td>{{day.precipAmount}}</td>
+                            <td>{{day.windSpd}}</td>
+                            <td>{{day.windDir}}</td>
+                            <td>///</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    
-    
-  </body>
+
+
+</body>
+
 </html>

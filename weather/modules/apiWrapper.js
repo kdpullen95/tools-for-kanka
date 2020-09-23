@@ -18,13 +18,13 @@ export function getWeather(apiToken, campaignID, calendarID) {
 }
 
 export function addWeather(apiToken, campaignID, calendarID, weatherObj) {
-    //
+    //TODO
 }
 
 export function updateWeather(apiToken, campaignID, calendarID, weatherObj) {
-    //
+    //TODO
 }
 
 export function deleteWeather(apiToken, campaignID, calendarID, weatherObj) {
-    //
+    //TODO
 }

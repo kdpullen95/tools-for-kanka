@@ -1,3 +1,5 @@
+import { Effect } from './Effect.js';
+
 export class Climate {
     //temperature variability between days
     tempVariability = 1;
@@ -30,8 +32,6 @@ export class Climate {
     cloudDraw = 1;
     //relative humidity!! Not absolute 
     avgHumidity = 0.6;
-    //negative means that it's more humid at night
-    avgHumidityDayNightSkew = 0.2;
     //negative means it's more humid in winter
     avgHumidityHotColdSkew = 0.2;
     //array of effects. a day will call the trigger function to determine if it has the effect

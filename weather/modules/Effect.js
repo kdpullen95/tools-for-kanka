@@ -1,5 +1,10 @@
 export class Effect {
 
+    name;
+    override = false;
+    chance = 0.4;
+    trigger = () => { return true };
+
     constructor() {    }
 
     withValues(values) {
@@ -7,11 +12,11 @@ export class Effect {
     }
 
     apply(day) {
-        //if trigger(day) && Math.random() > chance return true
+        return this.trigger(day) && Math.random() > this.chance;
     }
 
     isOverride() {
-        //returns true if it should override the current day's naming schema with its own name value
+        return this.override;
     }
 
 }
