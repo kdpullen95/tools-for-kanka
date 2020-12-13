@@ -1,7 +1,11 @@
+export const DayConstants = {
+    randomizedFields: [ 'dayTemp', 'nightTemp', 'windSpd', 'precipAmount', 'cloudCover', 'humidity' ]
+}
+
 export class Day {
 
-    highTemp;
-    lowTemp;
+    dayTemp;
+    nightTemp;
     windSpd;
     windDir;
     precipAmount;

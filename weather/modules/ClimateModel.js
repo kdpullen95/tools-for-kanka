@@ -1,11 +1,11 @@
 export class ClimateModel {
 
     climates = [];
+    //how fast it transitions between the two
     smoothing = 1;
 
-    constructor (warmestDay, coldestDay) {
-        this.warmestDay = warmestDay;
-        this.coldestDay = coldestDay;
+    constructor () {
+
     }
 
     addClimate(climate, length) {
@@ -20,28 +20,26 @@ export class ClimateModel {
         return this.climates.length > 1;
     }
 
+    /**
+     * Given a day (counted from day 0 of the first climate), create a climate that
+     * is a combination of the current climate and nearer-edge climate to allow
+     * smooth climate transitions
+     * @param {Int} day 
+     */
     interpolate(day) {
         if (this.climates.length === 0) return null; 
+        if (this.climates.length === 1) return this.climates[0].climate;
         let climate;
-        //if single climate model, just uses that single climate
-        if (this.climates.length === 1) {
-            climate = { ... this.climates[0].climate };
-        }
-        if (this.climates.length > 1) {
-            //uses the two closest climates (the one it's in, plus the one on the nearer edge) and the smoothing value to create a new climate with desired values
-            //TODO
-        }
-        //also takes warmestDay/Coldestday into account
-        return this.adjustForSeasonality(climate, day);
-    }
-
-    adjustForSeasonality(climate, day) {
-        //adjusts the avgTemp, avgHumidity, etc values for the day of the year it's in
+        //uses the two closest climates (the one it's in, plus the one on the nearer edge) and the smoothing value to create a new climate with desired values
         //TODO
         return climate;
     }
 
-
+    /**
+     * Deserialization
+     * Converts from Object to classes so class functions can be used
+     * @param {Object} values 
+     */
     withValues(values) {
         if (Array.isArray(values.climates)) {
             values.climates.map( (climate) => { 

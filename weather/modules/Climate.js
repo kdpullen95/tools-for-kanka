@@ -2,9 +2,17 @@ import { Effect } from './Effect.js';
 
 export class Climate {
     //temperature variability between days
-    tempVariability = 1;
+    tempVariability = 0.5;
     //precipitation variability between days
-    precipVariability = 1;
+    precipVariability = 0.5;
+    //temperature range of variability
+    tempRange = 1;
+    //precip range of variability
+    precipRange = 1;
+    //humidity range
+    humRange = 0.3;
+    highestHumidity = 0.85;
+    lowestHumidity = 0.15;
     //wind intensity
     windIntensity = 1;
     //wind variability between days
@@ -17,8 +25,6 @@ export class Climate {
     avgTemp = 14.6;
     //average Day/Night temperature skew (c), in offset from median
     avgDayNightSkew = 4;
-    //average hot/cold season skew (c), in offset from median
-    avgHotColdSkew = 10;
     //average precipitation (tbd)
     avgPrecip = 25;
     //chance of daily precip. This is the starting value that's modified based on continuity (previous rainy days + previous cloudy days)
@@ -28,12 +34,12 @@ export class Climate {
     //chance of daily cloudiness. This influences clouds on a scale (partly cloudy, full cover). Modified by continuity (previous rainy/cloudy days)
     //a day will always be cloudy if it's precip, but a value of zero here will mean ONLY precip days are cloudy
     dailyCloudChance = 0.4;
+    //cloud intensity, how "thick" and "dark" clouds tend to be
+    cloudIntensity = 1.3;
     //how 'sticky' cloudiness is - like precipDraw
     cloudDraw = 1;
     //relative humidity!! Not absolute 
     avgHumidity = 0.6;
-    //negative means it's more humid in winter
-    avgHumidityHotColdSkew = 0.2;
     //array of effects. a day will call the trigger function to determine if it has the effect
     effects = [];
 

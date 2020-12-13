@@ -8,8 +8,6 @@ document.addEventListener("DOMContentLoaded", () =>  {
     console.log("~~DOM initialized.");
 });
 
-const daysGenerator = new DaysGenerator();
-
 const container = new Vue({
     el: '#vue-activator',
     data: {
@@ -30,7 +28,7 @@ const container = new Vue({
             }
             const climateModel = new ClimateModel(45, 155);
             climateModel.addClimate(new Climate(), 200);
-            this.days = daysGenerator.init(climateModel, tArr).generate();
+            this.days = new DaysGenerator(climateModel).generate(tArr);
         },
         getCal() {
             this.activeCal = null;
